@@ -1,0 +1,153 @@
+rule-providers:
+  netflix:
+    type: http
+    behavior: classical
+    url: 'https://gist.github.com/phenixzhong/115620fc2fce83886a5c8006fef83ee2/raw/0b142f5fc8bbee7585c28b86777ae361838a1469/netflix.yaml'
+    path: '/root/.config/mihomo/rule-set/netflix.yaml'
+    interval: 86400
+
+  disneyplus:
+    type: http
+    behavior: classical
+    url: 'https://gist.github.com/phenixzhong/b5412c6e2ceb3d398b6a8529d4c25e13/raw/d66254c2fc41da3a2618b79362c45744e417bc2d/disneyplus.yaml'
+    path: '/root/.config/mihomo/rule-set/disneyplus.yaml'
+    interval: 86400
+
+  private_domain:
+    type: file
+    behavior: domain
+    path: '/root/.config/mihomo/rule-set/private_domain.yaml'
+
+  private_ip:
+    type: file
+    behavior: ipcidr
+    path: '/root/.config/mihomo/rule-set/private_ip.yaml'
+
+proxy-providers:
+  HK:
+    type: http
+    url: "http://10.0.10.201:1880/proxy/flowercloud/hk"
+    path: "/root/.config/mihomo/proxy_providers/hk.yaml"
+    interval: 360000
+    health-check:
+      enable: true
+      interval: 600
+      url: http://cp.cloudflare.com/
+
+  TW:
+    type: http
+    url: "http://10.0.10.201:1880/proxy/flowercloud/tw"
+    path: "/root/.config/mihomo/proxy_providers/tw.yaml"
+    interval: 360000
+    health-check:
+      enable: true
+      interval: 600
+      url: http://cp.cloudflare.com/
+
+
+  JP:
+    type: http
+    url: "http://10.0.10.201:1880/proxy/flowercloud/jp"
+    path: "/root/.config/mihomo/proxy_providers/jp.yaml"
+    interval: 360000
+    health-check:
+      enable: true
+      interval: 600
+      url: http://cp.cloudflare.com/
+
+  US:
+    type: http
+    url: "http://10.0.10.201:1880/proxy/flowercloud/us"
+    path: "/root/.config/mihomo/proxy_providers/us.yaml"
+    interval: 360000
+    health-check:
+      enable: true
+      interval: 600
+      url: http://cp.cloudflare.com/
+
+  SG:
+    type: http
+    url: "http://10.0.10.201:1880/proxy/flowercloud/sg"
+    path: "/root/.config/mihomo/proxy_providers/sg.yaml"
+    interval: 360000
+    health-check:
+      enable: true
+      interval: 600
+      url: http://cp.cloudflare.com/
+
+  JMS:
+    type: http
+    url: "http://10.0.10.201:1880/proxy/jms"
+    path: "/root/.config/mihomo/proxy_providers/jms.yaml"
+    interval: 1800
+    health-check:
+      enable: true
+      interval: 600
+      url: http://cp.cloudflare.com/
+
+proxy-groups:
+  - name: "PROXY"
+    type: select
+    proxies:
+      - "JMS"
+      - "TW"
+      - "HK"
+      - "JP"
+      - "SG"
+      - "US"
+
+  - name: "NETFLIX"
+    type: select
+    proxies:
+      - "TW"
+      - "HK"
+      - "JP"
+      - "SG"
+      - "US"
+
+  - name: "DISNEYPLUS"
+    type: select
+    proxies:
+      - "TW"
+      - "HK"
+      - "JP"
+      - "SG"
+      - "US"
+
+  - name: "JMS"
+    type: select
+    use:
+      - "JMS"
+
+  - name: "TW"
+    type: select
+    use:
+      - "TW"
+
+  - name: "HK"
+    type: select
+    use:
+      - "HK"
+
+  - name: "JP"
+    type: select
+    use:
+      - "JP"
+
+  - name: "SG"
+    type: select
+    use:
+      - "SG"
+
+  - name: "US"
+    type: select
+    use:
+      - "US"
+
+rules:
+  - IP-CIDR,10.0.0.0/8,DIRECT
+  - RULE-SET,netflix,NETFLIX
+  - RULE-SET,disneyplus,DISNEYPLUS
+  - RULE-SET,private_domain,DIRECT
+  - GEOIP,CN,DIRECT
+  - MATCH,PROXY

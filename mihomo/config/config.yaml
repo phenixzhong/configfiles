@@ -108,7 +108,7 @@ rule-providers:
 proxy-providers:
   HK:
     type: http
-    url: "http://10.0.10.201:1880/proxy/flowercloud/hk"
+    url: "http://10.0.10.106:1880/proxy/flowercloud/hk"
     path: "/root/.config/mihomo/proxy_providers/hk.yaml"
     interval: 360000
     health-check:
@@ -118,7 +118,7 @@ proxy-providers:
 
   TW:
     type: http
-    url: "http://10.0.10.201:1880/proxy/flowercloud/tw"
+    url: "http://10.0.10.106:1880/proxy/flowercloud/tw"
     path: "/root/.config/mihomo/proxy_providers/tw.yaml"
     interval: 360000
     health-check:
@@ -129,7 +129,7 @@ proxy-providers:
 
   JP:
     type: http
-    url: "http://10.0.10.201:1880/proxy/flowercloud/jp"
+    url: "http://10.0.10.106:1880/proxy/flowercloud/jp"
     path: "/root/.config/mihomo/proxy_providers/jp.yaml"
     interval: 360000
     health-check:
@@ -138,7 +138,7 @@ proxy-providers:
       url: http://cp.cloudflare.com/
   US:
     type: http
-    url: "http://10.0.10.201:1880/proxy/flowercloud/us"
+    url: "http://10.0.10.106:1880/proxy/flowercloud/us"
     path: "/root/.config/mihomo/proxy_providers/us.yaml"
     interval: 360000
     health-check:
@@ -148,7 +148,7 @@ proxy-providers:
 
   SG:
     type: http
-    url: "http://10.0.10.201:1880/proxy/flowercloud/sg"
+    url: "http://10.0.10.106:1880/proxy/flowercloud/sg"
     path: "/root/.config/mihomo/proxy_providers/sg.yaml"
     interval: 360000
     health-check:
@@ -158,7 +158,7 @@ proxy-providers:
 
   JMS:
     type: http
-    url: "http://10.0.10.201:1880/proxy/jms"
+    url: "http://10.0.10.106:1880/proxy/jms"
     path: "/root/.config/mihomo/proxy_providers/jms.yaml"
     interval: 1800
     health-check:
@@ -229,5 +229,6 @@ rules:
   - IP-CIDR,10.0.0.0/8,DIRECT
   - RULE-SET,netflix,NETFLIX
   - RULE-SET,disneyplus,DISNEYPLUS
+  - DOMAIN,api-huacloud.dev,DIRECT
   - GEOIP,CN,DIRECT
   - MATCH,PROXY
